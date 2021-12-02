@@ -27,6 +27,15 @@ We use [just](https://github.com/casey/just) to start and stop things and the av
 - `start-jaeger` - Starts the `jaegertracing/all-in-one` docker container.
 - `stop-jaeger` - Stops the Jaeger container.
 
+Jaeger can be accessed on http://localhost:16686/ and once you have started the services with `$ just start` you can then invoke the client with as such:
+
+```bash
+$ cargo run --bin maths-client -- add 5 7
+    Finished dev [unoptimized + debuginfo] target(s) in 0.23s
+     Running `target/debug/maths-client add 5 7`
+5 + 7 = 12
+```
+
 ## How it works
 
 Getting things going has been based off of the [opentelemetry-rust example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-grpc). We follow the same pattern, but having extracted some of the common code to the `maths-common` crate.
@@ -36,7 +45,13 @@ Most of the magic is in the `maths-common/src/lib.rs` file - see the following f
 - `trace_req<T>(req: T) -> Request<T>` - This will take your proto payload, and create the `tonic::Request` for you, ensuring that the curent span is injected into the request. This is how requests in this example are created.
 - `fn set_trace_ctx<T>(req: &Request<T>)` - This will extract the trace context out of a `tonic::Request` and set it as the current spans parent. This is called in all of the tonic async RPC handlers.
 
+Only instrumented spans will show up in the trace, this can be done manually with the `tracing::info_span!` macros (and the other helpers) - or by adding the `#[tracing::instrument]` attributes to your functions.
+
 _TODO: There is also commented out code for a tonic interceptor that does not work... I suspect it is due to when the interceptor runs, and it not being in a span._
+
+## Contributing
+
+Please feel free to send PRs with any improvements.
 
 ## License
 
