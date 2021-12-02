@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package add;
+
+import "maths.proto";
+
+service Add {
+  rpc Add (maths.AddRequest) returns (maths.AddResponse);
+}

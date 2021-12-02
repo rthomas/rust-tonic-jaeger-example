@@ -1,0 +1,8 @@
+[workspace]
+members = [
+        "maths-client",
+        "maths-frontend-service",
+        "maths-add-service",
+        "maths-mul-service",
+        "maths-common",
+        ]

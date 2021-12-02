@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package mul;
+
+import "maths.proto";
+
+service Mul {
+  rpc Mul (maths.MulRequest) returns (maths.MulResponse);
+}

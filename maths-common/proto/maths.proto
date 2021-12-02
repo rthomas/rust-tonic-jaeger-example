@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package maths;
+
+// This is the service frontend that is accessed from the client.
+service Maths {
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Mul (MulRequest) returns (MulResponse);
+}
+
+message AddRequest {
+  int32 val1 = 1;
+  int32 val2 = 2;
+}
+
+message AddResponse {
+  int64 result = 1;
+}
+
+message MulRequest {
+  int32 val1 = 1;
+  int32 val2 = 2;
+}
+
+message MulResponse {
+  int64 result = 1;
+}
